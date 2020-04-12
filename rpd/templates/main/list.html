@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Все дисциплины{% endblock %}
+
+{% block content %}
+<h1>Все дисциплины</h1>
+
+  <div class="module">
+    {% for rpd in object_list %}
+      <div class="course-info">
+        <h3>{{ rpd.name_of_disc }}</h3>
+        <p>
+          <a href="{% url "send_message" rpd.slug %}">Отправить сообщение</a>
+          <a href="{% url "course_edit" rpd.slug %}">Отправить файл</a>
+          <!--<a href="{% url "rpd_assigment_list" rpd.slug %}">Manage RPD</a> -->
+        </p>
+      </div>
+    {% empty %}
+      <p>Пока что пусто, ждите когда пришлют</p>
+    {% endfor %}
+    <p>
+    </p>
+  </div>
+{% endblock %}
