@@ -8,25 +8,13 @@
 
   <div class="module">
     <h2>Дисциплина: {{object.name_of_disc}}</h2>
-      <div><a href="{{url_f}}" target="_blank">{{url_f}}</a></div>
-    {% if uploaded_file_url %}
-    <!--<p><a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p> !-->
-     <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <p><input type="file" name="myfile"><p>
-      <p><input type="submit" value="Save course"></p>
-    </form>
-  {% else %}
-
+      <div><a href="{{object.content.url}}" target="_blank">{{object.content}}</a></div>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <p><input type="file" name="myfile"><p>
-      <p><input type="submit" value="Save course"></p>
+      <p><input type="submit" value="Сохранить файл"></p>
     </form>
       <a href="{% url "rpd_assigment_list" object.slug %}"><button>Отправить файл</button></a>
       </form>
-
-    {% endif %}
-    <a href="{{url_f}}">asdasdas</a>
   </div>
 {% endblock %}

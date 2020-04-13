@@ -15,7 +15,7 @@ class Chairs(models.Model):
 
     def __str__(self):
         return self.name_of_chair
-    
+
 class Specialisations(models.Model):
     code_of_specialisation = models.CharField(max_length=100)
     name_of_specialisation = models.CharField(max_length=1000)
@@ -73,7 +73,8 @@ class TableOfDisc(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     message = models.TextField()
-    content = models.FileField(upload_to='files')
+    specialisation = models.ForeignKey(Specialisations, on_delete=models.CASCADE)
+    content = models.FileField(upload_to='media/files')
     educator = models.ForeignKey(User, on_delete=models.CASCADE)
     chair = models.ForeignKey(Chairs,on_delete=models.CASCADE, )
     status = models.CharField(max_length=50,choices=STATUS_CHOICES,default='new')

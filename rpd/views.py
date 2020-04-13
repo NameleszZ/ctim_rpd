@@ -9,12 +9,12 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
+fs = FileSystemStorage(location='/media/files')
 
 
 def message_send(request, slug):
     form = MessageSendForm(request.POST or None)
     rpd_info = TableOfDisc.objects.get(slug=slug)
-
     if request.method == 'POST':
         mess = MessageSendForm(request.POST, instance=rpd_info)
         mess.message = request.POST.get('message')
@@ -22,13 +22,11 @@ def message_send(request, slug):
         rpd_info.message = messag
         rpd_info.save()
         mess.save()
-
         return HttpResponseRedirect(reverse('manage_rpd_list'))
     else:
         return render(request, 'main/form.html', {
             'form': form,
-            'object': rpd_info
-        })
+            'object': rpd_info})
 
 
 
@@ -36,7 +34,6 @@ def message_send(request, slug):
 
 def file_send(request, slug):
     rpd_info = TableOfDisc.objects.get(slug=slug)
-    url_file = '/../../' + str(rpd_info.content)
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
@@ -44,32 +41,19 @@ def file_send(request, slug):
         uploaded_file_url = fs.url(filename)
         rpd_info.content = myfile
         rpd_info.save()
-        url_file = uploaded_file_url
-
         return HttpResponseRedirect(reverse('manage_rpd_list'))
-
-        #rpd_info.content = request.POST.get('content')
-        #request.FILES = request.POST.get('content')
-        #form = FileRpdForm(request.POST)
-
-        #rpd_info.save()
-        #form.save()
-        #return HttpResponseRedirect(reverse('manage_rpd_list'))
-    #else:
-    #    form = FileRpdForm()
-    return render(request, 'main/edit.html',{'object':rpd_info,'url_f':url_file})
-    ###return render(request, 'main/edit.html', {
-     ###   'form': form,
-    ###})
+    return render(request, 'main/edit.html',{'object':rpd_info,})
 
 
 def list_of_RPD(request):
     objects = TableOfDisc.objects.filter(educator=request.user)
     profile_name = TableOfEducators.objects.filter(user=request.user)
+    group_info = Group.objects.get(code_group = objects.group)
 
     return render(request, 'main/list.html', {
         'object_list': objects,
-        'profile_list': profile_name
+        'profile_list': profile_name,
+        'group_in' : group_info,
     })
 
 

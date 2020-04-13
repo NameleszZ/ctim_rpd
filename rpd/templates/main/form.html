@@ -6,7 +6,7 @@
 
 {% block content %}
   <h1>Дисциплина: {{object.name_of_disc}}</h1>
-<div><a href="{{object.content}}" target="_blank">{{object.content}}</a></div>
+<div><a href="{{object.content.url}}" target="_blank">{{object.content}}</a></div>
 <p>{{object.message}}</p>
   <div class="module">
     <h2>Необходимая информация:</h2>

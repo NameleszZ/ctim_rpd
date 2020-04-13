@@ -25,7 +25,7 @@ SECRET_KEY = 'gv%8i2#m_*(h59+i))z%0r45@srh37^$pf8l2wmd8*oc4738_b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lamoz09.pythonanywhere.com']
 
 
 # Application definition
@@ -77,8 +77,11 @@ WSGI_APPLICATION = 'work_programm_of_dis.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lamoz09$db1',
+        'USER': 'lamoz09',
+        'PASSWORD': 'qaswzxalsk1029',
+        'HOST': 'lamoz09.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -123,3 +126,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/files/'
 
 LOGIN_REDIRECT_URL = 'main/me'
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
