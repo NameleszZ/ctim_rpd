@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" href="{% static "/images/favicon.ico" %}" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
         <title>{% block title %}Авторизация{% endblock %}</title>
         <link href="{% static "css/css" %}" rel="stylesheet" type="text/css">
@@ -19,13 +20,11 @@
                 <div class="form-form-wrap">
                     <div class="form-container">
                         <div class="form-content">
-                            <h1 class=""><a href="http://palmruz.com.xsph.ru/projects/study-practic-2020/11/S.T.A.L.K.E.R/index.html"><span class="brand-name">CTIM</span></a>'s  portal</h1>
+                            <h1 class=""><span class="brand-name">Авторизация</span></h1>
                                                 <form action="{% url 'login' %}" class="text-left" method="post">
                             <div class="form">
                                  {% csrf_token %}
-                                 {% if form.errors %} <p>Your username and password didn't match. Please try again.</p>
-
-                                 <p>Please, use the following form to log-in:</p>
+                                 {% if form.errors %} <p>Неверный логин или пароль. Повторите попытку.</p>
                                  {% endif %}
                                 <div id="username-field" class="field-wrapper input">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -45,12 +44,12 @@
                                             </label>
                                     </div>
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary" value="Log-in">Авторизоваться </button>
+                                        <button type="submit" class="btn btn-primary" value="Log-in">Вход </button>
                                     </div>
                                 </div>
                             </div>
                             </form>
-                            <p class="terms-conditions">© 2020 All Rights Reserved. <br><br><a href="/">CTIM</a>'s  portal - продукт разработки программ рабочей дисциплины <a href="damirvaliullin.11@gmail.com" target="blank">damirvaliullin.11@gmail.com</a></p>
+                            <p class="terms-conditions">© 2020 All Rights Reserved. <br><br>Сайт для разработки рабочих программ дисциплин</p>
 
                         </div>
                     </div>

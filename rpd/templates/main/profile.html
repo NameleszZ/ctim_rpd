@@ -6,18 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="{% static "/images/favicon.ico" %}" type="image/x-icon">
-    <title>{% block title %}Дисциплина: {{ object.name_of_disc }}"{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&amp;display=swap" rel="stylesheet">
+    <title>{% block title %}Профиль{% endblock %}</title>
+
+
 
     <link rel="stylesheet" type="text/css" href="{% static "filesendform/assets/bootstrap.min.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "filesendform/assets/dropzone.css" %}">
+
+
+
+        <link rel="stylesheet" href="../assets/plugins/fullcalendar/fullcalendar.min.css">
+<link rel="stylesheet" href="../assets/plugins/morrisjs/morris.css">
 
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="{% static "filesendform/assets/main.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "filesendform/assets/color_skins.css" %}">
 </head>
+
+
 <body class="theme-blue">
-   <nav class="top_navbar" style="border-bottom: 1px solid #191f28;">
+ <nav class="top_navbar" style="border-bottom: 1px solid #191f28;">
     <div class="container">
         <div class="row clearfix">
             <div class="col-12">
@@ -44,9 +51,9 @@
         </div>
     </div>
 </nav>
+<!-- Overlay For Sidebars -->
 <div class="overlay"></div>
-<section class="content" style="-moz-transition: .5s; -o-transition: .5s; -webkit-transition: .5s; transition: .5s; border-radius: .55rem; margin: 90px 0 0 0; z-index: 9; position: relative;">
-
+<section class="content">
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">
@@ -55,57 +62,86 @@
                         <div class="block-header">
                             <div class="row">
                                 <div class="col-lg-6 col-md-8 col-sm-12">
-                                    <h2>Передеча рабочей программы дисциплины {{object.name_of_disc}}</h2>
+                                    <h2>Profile</h2>
                                     <ul class="breadcrumb p-l-0 p-b-0 ">
-                                                                                    <li class="breadcrumb-item"><a href="../../../main/me">{{object.name_of_disc}}</a></li>
-                                                                                                                                                                    <li class="breadcrumb-item active">Отправить файл</li>
+                                                                                    <li class="breadcrumb-item"><a href="../../../main/me">{{profile_info.fio}}</a></li>
+                                                                                                                                                                    <li class="breadcrumb-item active">Профиль</li>
                                                                             </ul>
                                 </div>
-                                                            </div>
+
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
-                    {% if object.content%}
-                    <div class="header">
-                        <h2>Отправьте ваш файл администратору для проверки рабочей программы дисциплины</h2>
-
+        <div class="row clearfix profile-page">
+    <div class="col-lg-12 col-md-12">
+        <div class="card active-bg text-white">
+            <div class="body profile-header">
+                <img src="{{profile_info.image.url}}" class="user_pic rounded img-raised" alt="{{profile_info.fio}}">
+                <div class="detail">
+                    <div class="u_name">
+                        <h4><strong>{{profile_info.fio}}</strong></h4>
+                        <span>{{profile_info.degree}}</span>
+                        <p>{{profile_info.chair}}</p>
                     </div>
-                    <div class="header">
-                        <p>Дисциплина: {{object.name_of_disc}}</p>
-                        <p>Группа: {{object.group}}</p>
-                        <p>Кафедра: {{object.chair}}</p>
-                        <p>Специальность: {{spec.name_of_specialisation}}</p>
-                    <p>Ваш файл</p><a href="{{object.content.url}}" target="_blank">{{object.content}}</a></div>
-                    <div class="body">
-                       <form method="post">
-                          {{ form.as_p }}
-                          {% csrf_token %}
-
-                            <button class="btn bg-blue waves-effect waves-light " type="submit">Сохранить изменения</button>
-
-                        </form>
-                </div>
-
-                    {% else %}
-                    <div class="header">
-                    <p><strong>Нет файла. Пожалуйста закрепите файл перед его отправкой</strong></p></div>
-                    <div class="body">
-                        <a href="{% url "course_edit" object.slug %}">
-                        <button class="btn bg-blue waves-effect waves-light ">Перейти к сохранению файла</button></a>
-                    </div>
-                {% endif %}
-
+                    <div id="m_area_chart"></div>
                 </div>
             </div>
         </div>
-     </div>
+
+    </div>
+</div>
+    </div>
 </section>
+
+<!-- Default Size -->
+<div class="modal fade" id="addevent" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel">Add Event</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="number" class="form-control" placeholder="Event Date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-line">
+                        <input type="text" class="form-control" placeholder="Event Title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-line">
+                        <textarea class="form-control no-resize" placeholder="Event Description..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-round waves-effect">Add</button>
+                <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static "main/js/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "main/js/popper.min.js" %}"></script>
+    <script src="{% static "main/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "main/js/perfect-scrollbar.min.js" %}"></script>
+    <script src="{% static "main/js/app.js" %}"></script>
+    <script>
+        $(document).ready(function() {
+            App.init();
+        });
+    </script><style>.grid .icon-profile{width: 90px;}</style>
+    <script src="{% static "main/js/custom.js" %}"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <script src=""{% static "main/js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "main/js/contact.js" %}"></script>
 </body>
-<script src="{% static "filesendform/js/libscripts.bundle.js" %}"></script>
-<script src="{% static "filesendform/js/vendorscripts.bundle.js" %}"></script>
+</html>

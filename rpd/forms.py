@@ -20,13 +20,14 @@ class AssignRpdForm(forms.ModelForm):
 
     class Meta:
         model = TableOfDisc
-        fields = ['educator',
+        fields = ['educator','status',
                   'educ_comment']
 
     def __init__(self, *args, **kwargs):
         super(AssignRpdForm, self).__init__(*args, **kwargs)
         self.fields['educator'].label = 'Укажите кому отправить'
         self.fields['educ_comment'].label = 'Комментарий:'
+        self.fields['status'].label = 'Статус'
 
 
 class FileRpdForm(forms.ModelForm):
